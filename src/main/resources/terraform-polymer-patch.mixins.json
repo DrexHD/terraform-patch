@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "me.drex.terraformpatch.mixin",
+  "plugin": "me.drex.terraformpatch.util.TerraformMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BlockBehaviour$PropertiesMixin",
+    "RegistryMixin",
+    "terraform.TerraformBoatItemHelperImplMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
