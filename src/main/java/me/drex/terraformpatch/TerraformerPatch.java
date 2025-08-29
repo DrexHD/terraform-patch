@@ -35,8 +35,8 @@ import static net.minecraft.commands.Commands.literal;
 public class TerraformerPatch implements ModInitializer {
     public static final String MOD_ID = "terraformer-polymer-patch";
 
-    public static final Set<String> MOD_NAMESPACES = Set.of("terrestria", "cinderscapes", "traverse");
-    public static final Set<String> MOD_ASSET_IDS = Set.of("terrestria", "cinderscapes", "traverse", "terraform");
+    public static final Set<String> MOD_NAMESPACES = Set.of("terrestria", "cinderscapes", "traverse", "woods_and_mires");
+    public static final Set<String> MOD_ASSET_IDS = Set.of("terrestria", "cinderscapes", "traverse", "woods_and_mires", "terraform");
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 

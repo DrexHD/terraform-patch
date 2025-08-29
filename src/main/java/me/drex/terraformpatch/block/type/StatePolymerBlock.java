@@ -13,6 +13,7 @@ import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.resourcepack.extras.api.format.blockstate.BlockStateAsset;
 import eu.pb4.polymer.resourcepack.extras.api.format.blockstate.StateModelVariant;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
+import me.drex.terraformpatch.TerraformerPatch;
 import me.drex.terraformpatch.res.ResourceCollector;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -71,6 +72,7 @@ public record StatePolymerBlock(Map<BlockState, BlockState> map,
             }
             return new StatePolymerBlock(map, fallback);
         } catch (Throwable e) {
+            TerraformerPatch.LOGGER.error("Failed to handle state block {}", id, e);
             return null;
         }
     }

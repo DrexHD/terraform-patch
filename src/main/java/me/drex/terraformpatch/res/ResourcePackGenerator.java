@@ -19,7 +19,7 @@ import java.util.*;
 import static me.drex.terraformpatch.TerraformerPatch.id;
 
 public class ResourcePackGenerator {
-    private static final Set<String> EXPANDABLE = Set.of("wall", "fence", "slab", "stairs", "pressure_plate", "button");
+    private static final Set<String> EXPANDABLE = Set.of("wall", "fence", "slab", "stairs", "pressure_plate", "button", "pot", "pine_snag_branch");
     private static final Vec3 EXPANSION = new Vec3(0.08, 0.08, 0.08);
     public static final Set<ResourceLocation> SIGNS = new HashSet<>();
 

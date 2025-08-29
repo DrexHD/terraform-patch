@@ -28,18 +28,20 @@ dependencies {
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation("com.terraformersmc.terraform-api:terraform-biome-remapper-api-v1:${project.terraform_api_version}")
-	modImplementation("com.terraformersmc.terraform-api:terraform-config-api-v1:${project.terraform_api_version}")
-	modImplementation("com.terraformersmc.terraform-api:terraform-dirt-api-v1:${project.terraform_api_version}")
-	modImplementation("com.terraformersmc.terraform-api:terraform-shapes-api-v1:${project.terraform_api_version}")
-	modImplementation("com.terraformersmc.terraform-api:terraform-surfaces-api-v1:${project.terraform_api_version}")
-	modImplementation("com.terraformersmc.terraform-api:terraform-tree-api-v1:${project.terraform_api_version}")
-	modImplementation("com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_api_version}")
-	modImplementation("com.terraformersmc:biolith-fabric:${project.biolith_version}")
+	modCompileOnly("com.terraformersmc.terraform-api:terraform-biome-remapper-api-v1:${project.terraform_api_version}")
+	modCompileOnly("com.terraformersmc.terraform-api:terraform-config-api-v1:${project.terraform_api_version}")
+	modCompileOnly("com.terraformersmc.terraform-api:terraform-dirt-api-v1:${project.terraform_api_version}")
+	modCompileOnly("com.terraformersmc.terraform-api:terraform-shapes-api-v1:${project.terraform_api_version}")
+	modCompileOnly("com.terraformersmc.terraform-api:terraform-surfaces-api-v1:${project.terraform_api_version}")
+	modCompileOnly("com.terraformersmc.terraform-api:terraform-tree-api-v1:${project.terraform_api_version}")
+	modCompileOnly("com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_api_version}")
+	modCompileOnly("com.terraformersmc:biolith-fabric:${project.biolith_version}")
 
-	modImplementation("com.terraformersmc:terrestria-common:${project.terrestria_version}")
-	modImplementation("com.terraformersmc:cinderscapes-common:${project.cinderscapes_version}")
-	modImplementation("com.terraformersmc:traverse-common:${project.traverse_version}")
+	modCompileOnly("com.terraformersmc:terrestria-common:${project.terrestria_version}")
+	modCompileOnly("com.terraformersmc:cinderscapes-common:${project.cinderscapes_version}")
+	modCompileOnly("com.terraformersmc:traverse-common:${project.traverse_version}")
+	modCompileOnly files("libs/WoodsAndMires-2.1.1+1.21.8.jar")
+
 
 	modImplementation include("eu.pb4:factorytools:${project.factorytools_version}")
 	modImplementation include("nl.theepicblock:resource-locator-api:${project.resource_locator_version}")

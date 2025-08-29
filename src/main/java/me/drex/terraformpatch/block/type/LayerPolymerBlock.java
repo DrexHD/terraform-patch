@@ -32,7 +32,7 @@ public record LayerPolymerBlock(BlockState layer1, BlockState layer8) implements
 
             return new LayerPolymerBlock(layer1, layer8);
         } catch (Throwable e) {
-            TerraformerPatch.LOGGER.error("Failed to handle layered block {}: {}", id, e);
+            TerraformerPatch.LOGGER.error("Failed to handle layered block {}", id, e);
             return null;
         }
     }

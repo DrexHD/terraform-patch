@@ -1,0 +1,28 @@
+package me.drex.terraformpatch.block.mod;
+
+import eu.pb4.polymer.blocks.api.BlockModelType;
+import eu.pb4.polymer.core.api.block.PolymerBlock;
+import juuxel.woodsandmires.block.BranchBlock;
+import juuxel.woodsandmires.block.ShrubLogBlock;
+import me.drex.terraformpatch.block.type.BaseFactoryBlock;
+import me.drex.terraformpatch.block.type.BranchPolymerBlock;
+import me.drex.terraformpatch.block.type.StatePolymerBlock;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.Nullable;
+
+public class WoodsAndMiresPolymerBlockHelper implements ModPolymerBlockHelper {
+    public static final WoodsAndMiresPolymerBlockHelper INSTANCE = new WoodsAndMiresPolymerBlockHelper();
+
+    @Override
+    public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
+        return switch (id.getPath()) {
+            case "fireweed", "tansy" -> StatePolymerBlock.of(block, BlockModelType.BIOME_PLANT_BLOCK, BaseFactoryBlock.PLANT);
+            default -> switch (block) {
+                case ShrubLogBlock ignored -> BaseFactoryBlock.BARRIER;
+                case BranchBlock ignored -> BranchPolymerBlock.INSTANCE;
+                default -> null;
+            };
+        };
+    }
+}

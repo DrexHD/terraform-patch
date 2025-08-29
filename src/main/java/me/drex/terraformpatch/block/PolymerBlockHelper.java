@@ -13,10 +13,7 @@ import eu.pb4.polymer.core.api.block.PolymerBlock;
 import eu.pb4.polymer.resourcepack.extras.api.format.blockstate.BlockStateAsset;
 import eu.pb4.polymer.virtualentity.api.BlockWithElementHolder;
 import me.drex.terraformpatch.TerraformerPatch;
-import me.drex.terraformpatch.block.mod.CinderscapesPolymerBlockHelper;
-import me.drex.terraformpatch.block.mod.ModPolymerBlockHelper;
-import me.drex.terraformpatch.block.mod.TerrestriaPolymerBlockHelper;
-import me.drex.terraformpatch.block.mod.TraversePolymerBlockHelper;
+import me.drex.terraformpatch.block.mod.*;
 import me.drex.terraformpatch.block.type.*;
 import me.drex.terraformpatch.res.ResourceCollector;
 import me.drex.terraformpatch.res.ResourcePackGenerator;
@@ -36,7 +33,8 @@ public class PolymerBlockHelper {
     private static final Map<String, Supplier<ModPolymerBlockHelper>> MOD_HELPERS = Map.of(
         "traverse", () -> TraversePolymerBlockHelper.INSTANCE,
         "terrestria", () -> TerrestriaPolymerBlockHelper.INSTANCE,
-        "cinderscapes", () -> CinderscapesPolymerBlockHelper.INSTANCE
+        "cinderscapes", () -> CinderscapesPolymerBlockHelper.INSTANCE,
+        "woods_and_mires", () -> WoodsAndMiresPolymerBlockHelper.INSTANCE
     );
 
     public static void registerPolymerBlock(ResourceLocation id, Block block) {
@@ -64,7 +62,7 @@ public class PolymerBlockHelper {
             }
         }
 
-        return switch (block) {
+        var polymerBlock = switch (block) {
             case WallBlock ignored -> StateCopyFactoryBlock.WALL;
             case StairBlock ignored -> StateCopyFactoryBlock.STAIR;
             case FenceBlock ignored -> StateCopyFactoryBlock.FENCE;
@@ -90,14 +88,18 @@ public class PolymerBlockHelper {
                     yield StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
                 } else {
                     TerraformerPatch.LOGGER.warn("Missing overlay for block: '{}' {}", id, block.getClass().getName());
-                    if (block.defaultBlockState().getCollisionShape(PolymerCommonUtils.getFakeWorld(), BlockPos.ZERO).isEmpty()) {
-                        yield BaseFactoryBlock.PLANT;
-                    } else {
-                        yield BaseFactoryBlock.BARRIER;
-                    }
+                    yield null;
                 }
             }
         };
+        if (polymerBlock == null) {
+            if (block.defaultBlockState().getCollisionShape(PolymerCommonUtils.getFakeWorld(), BlockPos.ZERO).isEmpty()) {
+                polymerBlock = BaseFactoryBlock.PLANT;
+            } else {
+                polymerBlock = BaseFactoryBlock.BARRIER;
+            }
+        }
+        return polymerBlock;
     }
 
     public static BlockState requestPolymerBlockState(ResourceLocation id, String variant, BlockModelType blockModelType) throws IOException {
