@@ -16,7 +16,6 @@ import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.terraformpatch.TerraformerPatch;
 import me.drex.terraformpatch.res.ResourceCollector;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

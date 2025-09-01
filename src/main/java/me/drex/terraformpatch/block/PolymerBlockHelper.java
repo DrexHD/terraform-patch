@@ -47,6 +47,9 @@ public class PolymerBlockHelper {
 
         if (block instanceof SignBlock) {
             SignModel.setModel(block, id.withPrefix("block_sign/"));
+        } else if (polymerBlock instanceof StateCopyFactoryBlock){
+            // TODO change how to specify what should be expanded
+            ResourcePackGenerator.expandBlockModel(id);
         }
         if (block.getClass().equals(StandingSignBlock.class)) {
             ResourcePackGenerator.SIGNS.add(id.withPath(id.getPath().replace("_sign", "")));
@@ -63,20 +66,44 @@ public class PolymerBlockHelper {
         }
 
         var polymerBlock = switch (block) {
-            case WallBlock ignored -> StateCopyFactoryBlock.WALL;
-            case StairBlock ignored -> StateCopyFactoryBlock.STAIR;
-            case FenceBlock ignored -> StateCopyFactoryBlock.FENCE;
-            case FenceGateBlock ignored -> StateCopyFactoryBlock.FENCE_GATE;
-            case ButtonBlock ignored -> StateCopyFactoryBlock.BUTTON;
-            case PressurePlateBlock ignored -> StateCopyFactoryBlock.PRESSURE_PLATE;
+            case WallBlock ignored -> {
+                ResourcePackGenerator.expandBlockModel(id);
+                yield StateCopyFactoryBlock.WALL;
+            }
+            case StairBlock ignored -> {
+                ResourcePackGenerator.expandBlockModel(id);
+                yield StateCopyFactoryBlock.STAIR;
+            }
+            case FenceBlock ignored -> {
+                ResourcePackGenerator.expandBlockModel(id);
+                yield StateCopyFactoryBlock.FENCE;
+            }
+            case FenceGateBlock ignored -> {
+                ResourcePackGenerator.expandBlockModel(id);
+                yield StateCopyFactoryBlock.FENCE_GATE;
+            }
+            case ButtonBlock ignored -> {
+                ResourcePackGenerator.expandBlockModel(id);
+                yield StateCopyFactoryBlock.BUTTON;
+            }
+            case PressurePlateBlock ignored -> {
+                ResourcePackGenerator.expandBlockModel(id);
+                yield StateCopyFactoryBlock.PRESSURE_PLATE;
+            }
             case WallSignBlock ignored -> StateCopyFactoryBlock.WALL_SIGN;
             case WallHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_WALL_SIGN;
             case CeilingHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_SIGN;
             case StandingSignBlock ignored -> StateCopyFactoryBlock.SIGN;
             case DoorBlock ignored -> DoorPolymerBlock.INSTANCE;
             case TrapDoorBlock ignored -> TrapdoorPolymerBlock.INSTANCE;
-            case SlabBlock ignored -> SlabPolymerBlock.INSTANCE;
-            case FlowerPotBlock ignored -> BaseFactoryBlock.POT;
+            case SlabBlock ignored -> {
+                ResourcePackGenerator.expandBlockModel(id);
+                yield SlabPolymerBlock.INSTANCE;
+            }
+            case FlowerPotBlock ignored -> {
+                ResourcePackGenerator.expandBlockModel(id);
+                yield BaseFactoryBlock.POT;
+            }
             case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK);
             case SnowyDirtBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
             case RotatedPillarBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
