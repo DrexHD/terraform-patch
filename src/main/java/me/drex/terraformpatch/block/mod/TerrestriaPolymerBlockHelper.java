@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
+// TODO andisol_grass_block
 public class TerrestriaPolymerBlockHelper implements ModPolymerBlockHelper {
     public static final TerrestriaPolymerBlockHelper INSTANCE = new TerrestriaPolymerBlockHelper();
 
@@ -21,8 +22,8 @@ public class TerrestriaPolymerBlockHelper implements ModPolymerBlockHelper {
 
         return switch (block) {
             case SaguaroCactusBlock ignored -> BaseFactoryBlock.BARRIER;
-            case CattailBlock ignored -> StatePolymerBlock.of(block, BlockModelType.KELP_BLOCK);
-            case TallCattailBlock ignored -> StatePolymerBlock.of(block, BlockModelType.KELP_BLOCK);
+            case CattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP_BLOCK);
+            case TallCattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP_BLOCK);
             default -> null;
         };
     }

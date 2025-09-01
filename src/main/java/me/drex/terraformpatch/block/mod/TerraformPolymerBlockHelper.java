@@ -19,9 +19,9 @@ public class TerraformPolymerBlockHelper implements ModPolymerBlockHelper {
     public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
         return switch (block) {
             case SmallLogBlock ignored -> BaseFactoryBlock.BARRIER;
-            case QuarterLogBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
-            case TerraformDirtPathBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FARMLAND_BLOCK);
-            case LeafPileBlock ignored -> StatePolymerBlock.of(block, BlockModelType.TRIPWIRE_BLOCK_FLAT);
+            case QuarterLogBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case TerraformDirtPathBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND_BLOCK);
+            case LeafPileBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.TRIPWIRE_BLOCK_FLAT);
             default -> null;
         };
     }

@@ -77,15 +77,15 @@ public class PolymerBlockHelper {
             case TrapDoorBlock ignored -> TrapdoorPolymerBlock.INSTANCE;
             case SlabBlock ignored -> SlabPolymerBlock.INSTANCE;
             case FlowerPotBlock ignored -> BaseFactoryBlock.POT;
-            case LeavesBlock ignored -> StatePolymerBlock.of(block, BlockModelType.BIOME_TRANSPARENT_BLOCK);
-            case SnowyDirtBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
-            case RotatedPillarBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
-            case ColoredFallingBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
-            case FarmBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FARMLAND_BLOCK);
+            case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK);
+            case SnowyDirtBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case RotatedPillarBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case ColoredFallingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case FarmBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND_BLOCK);
             case VegetationBlock ignored -> BaseFactoryBlock.PLANT;
             default -> {
                 if (block.getClass().equals(Block.class)) {
-                    yield StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
+                    yield StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
                 } else {
                     TerraformerPatch.LOGGER.warn("Missing overlay for block: '{}' {}", id, block.getClass().getName());
                     yield null;

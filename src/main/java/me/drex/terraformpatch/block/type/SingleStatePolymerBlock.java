@@ -16,6 +16,7 @@ import me.drex.terraformpatch.TerraformerPatch;
 import me.drex.terraformpatch.res.ResourceCollector;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.IoSupplier;
@@ -34,13 +35,11 @@ import java.util.*;
 public record SingleStatePolymerBlock(BlockState blockState,
                                       FactoryBlock fallback) implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
 
-    public static SingleStatePolymerBlock of(Block block, BlockModelType type) {
-        return of(block, type, BaseFactoryBlock.BARRIER);
+    public static SingleStatePolymerBlock of(ResourceLocation id, Block block, BlockModelType type) {
+        return of(id, block, type, BaseFactoryBlock.BARRIER);
     }
 
-    public static SingleStatePolymerBlock of(Block block, BlockModelType type, FactoryBlock fallback) {
-        var id = BuiltInRegistries.BLOCK.getKey(block);
-
+    public static SingleStatePolymerBlock of(ResourceLocation id, Block block, BlockModelType type, FactoryBlock fallback) {
         try {
             IoSupplier<InputStream> supplier = ResourceCollector.GLOBAL_ASSETS.getAsset(id.getNamespace(), "blockstates/" + id.getPath() + ".json");
             BlockStateAsset decoded = BlockStateAsset.CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(new JsonReader(new InputStreamReader(supplier.get())))).getOrThrow().getFirst();

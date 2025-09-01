@@ -22,14 +22,14 @@ public class CinderscapesPolymerBlockHelper implements ModPolymerBlockHelper {
             // This is not great, but everything else seems worse
             // Could be improved by using textured blockstates for layers 1 and 8, but models for 2-7
             // but the holders should only be created when necessary
-            case AshLayerBlock ignored -> LayerPolymerBlock.of(block);
-            case VegetationBlock ignored -> StatePolymerBlock.of(block, BlockModelType.TRIPWIRE_BLOCK, BaseFactoryBlock.PLANT);
+            case AshLayerBlock ignored -> LayerPolymerBlock.of(id, block);
+            case VegetationBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.TRIPWIRE_BLOCK, BaseFactoryBlock.PLANT);
             case GhastlyEctoplasmBlock ignored -> BaseFactoryBlock.PLANT;
             case PolypiteQuartzBlock ignored -> PolypiteQuartzBlockPolymerBlock.INSTANCE;
-            case CinderscapesTransparentBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
-            case CinderscapesNyliumBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
-            case CinderscapesOreBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
-            case LeavesBlock ignored -> StatePolymerBlock.of(block, BlockModelType.FULL_BLOCK);
+            case CinderscapesTransparentBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case CinderscapesNyliumBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case CinderscapesOreBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
             default -> null;
         };
     }

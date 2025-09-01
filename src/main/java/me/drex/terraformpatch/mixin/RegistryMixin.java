@@ -19,8 +19,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Registry.class)
 public interface RegistryMixin {
@@ -31,27 +29,12 @@ public interface RegistryMixin {
             target = "Lnet/minecraft/core/WritableRegistry;register(Lnet/minecraft/resources/ResourceKey;Ljava/lang/Object;Lnet/minecraft/core/RegistrationInfo;)Lnet/minecraft/core/Holder$Reference;"
         )
     )
-    private static <V, T extends V> boolean dontRegisterCreateModeTabs(WritableRegistry<T> instance, ResourceKey<T> resourceKey, T t, RegistrationInfo registrationInfo) {
+    private static <V, T extends V> boolean polymerifyEntries(WritableRegistry<T> instance, ResourceKey<T> resourceKey, T object, RegistrationInfo registrationInfo) {
         ResourceLocation id = resourceKey.location();
         if (!TerraformerPatch.MOD_NAMESPACES.contains(id.getNamespace())) {
             return true;
         }
         var registry = (Object) instance;
-        if (registry == BuiltInRegistries.CREATIVE_MODE_TAB) {
-            return false;
-        }
-        return true;
-    }
-
-    @Inject(
-        method = "register(Lnet/minecraft/core/Registry;Lnet/minecraft/resources/ResourceKey;Ljava/lang/Object;)Ljava/lang/Object;",
-        at = @At("TAIL")
-    )
-    private static <V, T extends V> void polymerifyEntries(Registry<V> registry, ResourceKey<V> resourceKey, T object, CallbackInfoReturnable<T> cir) {
-        ResourceLocation id = resourceKey.location();
-        if (!TerraformerPatch.MOD_NAMESPACES.contains(id.getNamespace())) {
-            return;
-        }
         if (registry == BuiltInRegistries.ITEM) {
             Item item = (Item) object;
             PolymerItem.registerOverlay(item, new PolyBaseItem(item));
@@ -61,6 +44,10 @@ public interface RegistryMixin {
             PolymerSoundEvent.registerOverlay((SoundEvent) object);
         } else if (registry == BuiltInRegistries.CREATIVE_MODE_TAB) {
             PolymerItemGroupUtils.registerPolymerItemGroup(id, (CreativeModeTab) object);
+            // dont register groups
+            return false;
         }
+
+        return true;
     }
 }

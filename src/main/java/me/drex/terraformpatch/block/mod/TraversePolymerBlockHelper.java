@@ -16,7 +16,7 @@ public class TraversePolymerBlockHelper implements ModPolymerBlockHelper {
         if (polymerBlock != null) return polymerBlock;
 
         if (id.getPath().contains("autumnal_leaves")) {
-            return StatePolymerBlock.of(block, BlockModelType.TRANSPARENT_BLOCK);
+            return StatePolymerBlock.of(id, block, BlockModelType.TRANSPARENT_BLOCK);
         }
         return null;
     }
