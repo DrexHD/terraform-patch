@@ -21,10 +21,7 @@ public class WoodsAndMiresPolymerBlockHelper implements ModPolymerBlockHelper {
             case "fireweed", "tansy" -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_PLANT_BLOCK, BaseFactoryBlock.PLANT);
             default -> switch (block) {
                 case ShrubLogBlock ignored -> BaseFactoryBlock.BARRIER;
-                case BranchBlock ignored -> {
-                    ResourcePackGenerator.expandBlockModel(id);
-                    yield BranchPolymerBlock.INSTANCE;
-                }
+                case BranchBlock ignored -> ResourcePackGenerator.expandBlockModel(id, BranchPolymerBlock.INSTANCE);
                 default -> null;
             };
         };

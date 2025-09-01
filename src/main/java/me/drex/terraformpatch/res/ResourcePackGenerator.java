@@ -7,6 +7,7 @@ import com.mojang.serialization.JsonOps;
 import eu.pb4.factorytools.api.block.model.generic.BlockStateModelManager;
 import eu.pb4.factorytools.api.resourcepack.ModelModifiers;
 import eu.pb4.polymer.common.api.PolymerCommonUtils;
+import eu.pb4.polymer.core.api.block.PolymerBlock;
 import eu.pb4.polymer.resourcepack.api.AssetPaths;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.api.ResourcePackBuilder;
@@ -59,7 +60,7 @@ public class ResourcePackGenerator {
         }
     }
 
-    public static void expandBlockModel(ResourceLocation id) {
+    public static PolymerBlock expandBlockModel(ResourceLocation id, PolymerBlock polymerBlock) {
         try {
             IoSupplier<InputStream> supplier = getAsset(id.getNamespace(), "blockstates/" + id.getPath() + ".json");
             BlockStateAsset decoded = BlockStateAsset.CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(new JsonReader(new InputStreamReader(supplier.get())))).getOrThrow().getFirst();
@@ -72,6 +73,7 @@ public class ResourcePackGenerator {
         } catch (Throwable e) {
             TerraformerPatch.LOGGER.error("Failed to read blockstate {}: {}", id, e);
         }
+        return polymerBlock;
     }
 
     private static void expandModel(ResourceLocation id) {

@@ -32,8 +32,13 @@ public record StateCopyFactoryBlock(Block clientBlock,
     public static final StateCopyFactoryBlock STAIR = new StateCopyFactoryBlock(Blocks.SANDSTONE_STAIRS, ShiftyBlockStateModel::longRange);
     public static final StateCopyFactoryBlock FENCE = new StateCopyFactoryBlock(Blocks.BIRCH_FENCE, ShiftyBlockStateModel::longRange);
     public static final StateCopyFactoryBlock FENCE_GATE = new StateCopyFactoryBlock(Blocks.BIRCH_FENCE_GATE, ShiftyBlockStateModel::longRange);
-    public static final StateCopyFactoryBlock BUTTON = new StateCopyFactoryBlock(Blocks.STONE_BUTTON, ShiftyBlockStateModel::longRange);
-    public static final StateCopyFactoryBlock PRESSURE_PLATE = new StateCopyFactoryBlock(Blocks.STONE_PRESSURE_PLATE, ShiftyBlockStateModel::longRange);
+    public static final StateCopyFactoryBlock BUTTON = new StateCopyFactoryBlock(Blocks.STONE_BUTTON, ShiftyBlockStateModel::midRange);
+    public static final StateCopyFactoryBlock PRESSURE_PLATE = new StateCopyFactoryBlock(Blocks.STONE_PRESSURE_PLATE, ShiftyBlockStateModel::midRange);
+    public static final StateCopyFactoryBlock BARS = new StateCopyFactoryBlock(Blocks.IRON_BARS, ShiftyBlockStateModel::midRange);
+    public static final StateCopyFactoryBlock PANE = new StateCopyFactoryBlock(Blocks.GLASS_PANE, ShiftyBlockStateModel::midRange);
+    public static final StateCopyFactoryBlock CARPET = new StateCopyFactoryBlock(Blocks.WHITE_CARPET, ShiftyBlockStateModel::longRange);
+    public static final StateCopyFactoryBlock CHAIN = new StateCopyFactoryBlock(Blocks.CHAIN, ShiftyBlockStateModel::longRange);
+    public static final StateCopyFactoryBlock LANTERN = new StateCopyFactoryBlock(Blocks.LANTERN, ShiftyBlockStateModel::longRange);
 
     @Override
     public BlockState getPolymerBlockState(BlockState state, PacketContext context) {

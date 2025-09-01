@@ -18,6 +18,7 @@ import me.drex.terraformpatch.block.type.*;
 import me.drex.terraformpatch.res.ResourceCollector;
 import me.drex.terraformpatch.res.ResourcePackGenerator;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.world.level.block.*;
@@ -31,6 +32,7 @@ import java.util.function.Supplier;
 
 public class PolymerBlockHelper {
     private static final Map<String, Supplier<ModPolymerBlockHelper>> MOD_HELPERS = Map.of(
+        "blockus", () -> BlockusPolymerBlockHelper.INSTANCE,
         "traverse", () -> TraversePolymerBlockHelper.INSTANCE,
         "terrestria", () -> TerrestriaPolymerBlockHelper.INSTANCE,
         "cinderscapes", () -> CinderscapesPolymerBlockHelper.INSTANCE,
@@ -47,9 +49,6 @@ public class PolymerBlockHelper {
 
         if (block instanceof SignBlock) {
             SignModel.setModel(block, id.withPrefix("block_sign/"));
-        } else if (polymerBlock instanceof StateCopyFactoryBlock){
-            // TODO change how to specify what should be expanded
-            ResourcePackGenerator.expandBlockModel(id);
         }
         if (block.getClass().equals(StandingSignBlock.class)) {
             ResourcePackGenerator.SIGNS.add(id.withPath(id.getPath().replace("_sign", "")));
@@ -66,52 +65,32 @@ public class PolymerBlockHelper {
         }
 
         var polymerBlock = switch (block) {
-            case WallBlock ignored -> {
-                ResourcePackGenerator.expandBlockModel(id);
-                yield StateCopyFactoryBlock.WALL;
-            }
-            case StairBlock ignored -> {
-                ResourcePackGenerator.expandBlockModel(id);
-                yield StateCopyFactoryBlock.STAIR;
-            }
-            case FenceBlock ignored -> {
-                ResourcePackGenerator.expandBlockModel(id);
-                yield StateCopyFactoryBlock.FENCE;
-            }
-            case FenceGateBlock ignored -> {
-                ResourcePackGenerator.expandBlockModel(id);
-                yield StateCopyFactoryBlock.FENCE_GATE;
-            }
-            case ButtonBlock ignored -> {
-                ResourcePackGenerator.expandBlockModel(id);
-                yield StateCopyFactoryBlock.BUTTON;
-            }
-            case PressurePlateBlock ignored -> {
-                ResourcePackGenerator.expandBlockModel(id);
-                yield StateCopyFactoryBlock.PRESSURE_PLATE;
-            }
+            case WallBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.WALL);
+            case StairBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.STAIR);
+            case FenceBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.FENCE);
+            case FenceGateBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.FENCE_GATE);
+            case ButtonBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.BUTTON);
+            case BasePressurePlateBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.PRESSURE_PLATE);
+            case CarpetBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.CARPET);
             case WallSignBlock ignored -> StateCopyFactoryBlock.WALL_SIGN;
             case WallHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_WALL_SIGN;
             case CeilingHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_SIGN;
             case StandingSignBlock ignored -> StateCopyFactoryBlock.SIGN;
             case DoorBlock ignored -> DoorPolymerBlock.INSTANCE;
             case TrapDoorBlock ignored -> TrapdoorPolymerBlock.INSTANCE;
-            case SlabBlock ignored -> {
-                ResourcePackGenerator.expandBlockModel(id);
-                yield SlabPolymerBlock.INSTANCE;
-            }
-            case FlowerPotBlock ignored -> {
-                ResourcePackGenerator.expandBlockModel(id);
-                yield BaseFactoryBlock.POT;
-            }
+            case SlabBlock ignored -> ResourcePackGenerator.expandBlockModel(id, SlabPolymerBlock.INSTANCE);
+            case FlowerPotBlock ignored -> ResourcePackGenerator.expandBlockModel(id, BaseFactoryBlock.POT);
+            case WaterloggedTransparentBlock ignored -> BaseFactoryBlock.BARRIER;
             case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK);
             case SnowyDirtBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-            case RotatedPillarBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case RotatedPillarBlock ignored ->
+                StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK, BaseFactoryBlock.BARRIER, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y);
             case ColoredFallingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
             case FarmBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND_BLOCK);
             case VegetationBlock ignored -> BaseFactoryBlock.PLANT;
             default -> {
                 if (block.getClass().equals(Block.class)) {
+                    // TODO log debug
                     yield StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
                 } else {
                     TerraformerPatch.LOGGER.warn("Missing overlay for block: '{}' {}", id, block.getClass().getName());
