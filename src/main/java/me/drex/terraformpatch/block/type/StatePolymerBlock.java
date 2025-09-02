@@ -1,8 +1,5 @@
 package me.drex.terraformpatch.block.type;
 
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-import com.mojang.serialization.JsonOps;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BlockStateModelManager;
@@ -14,12 +11,11 @@ import eu.pb4.polymer.resourcepack.extras.api.format.blockstate.BlockStateAsset;
 import eu.pb4.polymer.resourcepack.extras.api.format.blockstate.StateModelVariant;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.terraformpatch.TerraformerPatch;
-import me.drex.terraformpatch.res.ResourceCollector;
+import me.drex.terraformpatch.res.ResourceHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -30,8 +26,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -48,14 +42,13 @@ public record StatePolymerBlock(Map<BlockState, BlockState> map,
 
     public static StatePolymerBlock of(ResourceLocation id, Block block, BlockModelType type, FactoryBlock fallback, Predicate<BlockState> canUseBlock) {
         try {
-            IoSupplier<InputStream> supplier = ResourceCollector.GLOBAL_ASSETS.getAsset(id.getNamespace(), "blockstates/" + id.getPath() + ".json");
-            BlockStateAsset decoded = BlockStateAsset.CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(new JsonReader(new InputStreamReader(supplier.get())))).getOrThrow().getFirst();
+            BlockStateAsset blockStateAsset = ResourceHelper.decodeBlockState(id);
 
             var list = new ArrayList<Tuple<BlockStatePredicate, List<StateModelVariant>>>();
             var cache = new HashMap<List<StateModelVariant>, BlockState>();
 
 
-            BlockStateModelManager.parseVariants(block, decoded.variants().orElseThrow(), (a, b) -> list.add(new Tuple<>(a, b)));
+            BlockStateModelManager.parseVariants(block, blockStateAsset.variants().orElseThrow(), (a, b) -> list.add(new Tuple<>(a, b)));
             var map = new IdentityHashMap<BlockState, BlockState>();
 
             for (var state : block.getStateDefinition().getPossibleStates()) {

@@ -33,7 +33,7 @@ public record BaseFactoryBlock(Function<BlockState, BlockState> blockStateFuncti
     public static final BaseFactoryBlock BARRIER = new BaseFactoryBlock(blockState -> Blocks.BARRIER.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, blockState.getValueOrElse(BlockStateProperties.WATERLOGGED, false)), false, BlockStateModel::longRange);
     public static final BaseFactoryBlock POT = new BaseFactoryBlock(Blocks.FLOWER_POT.defaultBlockState(), false, BlockStateModel::midRange);
     public static final BaseFactoryBlock PLANT = new BaseFactoryBlock(PolymerBlockResourceUtils.requestEmpty(BlockModelType.PLANT_BLOCK), false, BlockStateModel::midRange);
-    public static final BaseFactoryBlock CACTUS = new BaseFactoryBlock(PolymerBlockResourceUtils.requestEmpty(BlockModelType.CACTUS_BLOCK), false, BlockStateModel::midRange);
+    public static final BaseFactoryBlock CACTUS = new BaseFactoryBlock(Blocks.CACTUS.defaultBlockState(), false, (blockState, blockPos) -> null);
 
     @Override
     public BlockState getPolymerBlockState(BlockState state, PacketContext context) {

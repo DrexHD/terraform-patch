@@ -12,7 +12,7 @@ import eu.pb4.polymer.virtualentity.api.attachment.BlockAwareAttachment;
 import eu.pb4.polymer.virtualentity.impl.HolderHolder;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
-import me.drex.terraformpatch.res.ResourceCollector;
+import me.drex.terraformpatch.res.ResourceHelper;
 import me.drex.terraformpatch.res.ResourcePackGenerator;
 import net.fabricmc.api.ModInitializer;
 
@@ -42,7 +42,7 @@ public class TerraformerPatch implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        PolymerResourcePackUtils.RESOURCE_PACK_CREATION_EVENT.register(ResourceCollector::init);
+        PolymerResourcePackUtils.RESOURCE_PACK_CREATION_EVENT.register(ResourceHelper::init);
         ResourcePackGenerator.setup();
 
         for (String modNamespace : MOD_NAMESPACES) {

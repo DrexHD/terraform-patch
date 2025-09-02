@@ -15,7 +15,7 @@ import eu.pb4.polymer.virtualentity.api.BlockWithElementHolder;
 import me.drex.terraformpatch.TerraformerPatch;
 import me.drex.terraformpatch.block.mod.*;
 import me.drex.terraformpatch.block.type.*;
-import me.drex.terraformpatch.res.ResourceCollector;
+import me.drex.terraformpatch.res.ResourceHelper;
 import me.drex.terraformpatch.res.ResourcePackGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -109,10 +109,9 @@ public class PolymerBlockHelper {
     }
 
     public static BlockState requestPolymerBlockState(ResourceLocation id, String variant, BlockModelType blockModelType) throws IOException {
-        IoSupplier<InputStream> supplier = ResourceCollector.GLOBAL_ASSETS.getAsset(id.getNamespace(), "blockstates/" + id.getPath() + ".json");
-        BlockStateAsset decoded = BlockStateAsset.CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(new JsonReader(new InputStreamReader(supplier.get())))).getOrThrow().getFirst();
+        BlockStateAsset blockStateAsset = ResourceHelper.decodeBlockState(id);
 
-        var model = decoded.variants().get().get(variant);
+        var model = blockStateAsset.variants().get().get(variant);
 
         return PolymerBlockResourceUtils.requestBlock(
             blockModelType,
