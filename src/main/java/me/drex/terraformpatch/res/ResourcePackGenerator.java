@@ -14,6 +14,7 @@ import eu.pb4.polymer.resourcepack.extras.api.format.blockstate.StateMultiPartDe
 import eu.pb4.polymer.resourcepack.extras.api.format.model.ModelAsset;
 import eu.pb4.polymer.resourcepack.extras.api.format.model.ModelElement;
 import me.drex.terraformpatch.TerraformerPatch;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 
@@ -61,24 +62,27 @@ public class ResourcePackGenerator {
         builder.forEachFile(((string, bytes) -> {
             String[] parts = string.split("/", 4);
             if (parts.length < 4) return;
-            ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parts[1], parts[3]);
-            if (!parts[0].equals("assets") || !parts[2].equals("models")) return;
-            if (!EXPANDABLE_MODELS.contains(id)) return;
-            var asset = ModelAsset.fromJson(new String(bytes, StandardCharsets.UTF_8));
-            if (asset.parent().isPresent()) {
-                var parentId = asset.parent().get();
-                var parentAsset = ModelAsset.fromJson(new String(Objects.requireNonNull(builder.getDataOrSource(AssetPaths.model(parentId) + ".json")), StandardCharsets.UTF_8));
+            try {
+                ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parts[1], parts[3]);
+                if (!parts[0].equals("assets") || !parts[2].equals("models")) return;
+                if (!EXPANDABLE_MODELS.contains(id)) return;
+                var asset = ModelAsset.fromJson(new String(bytes, StandardCharsets.UTF_8));
+                if (asset.parent().isPresent()) {
+                    var parentId = asset.parent().get();
+                    var parentAsset = ModelAsset.fromJson(new String(Objects.requireNonNull(builder.getDataOrSource(AssetPaths.model(parentId) + ".json")), StandardCharsets.UTF_8));
 
-                builder.addData(AssetPaths.model(TerraformerPatch.MOD_ID, parentId.getPath()) + ".json", new ModelAsset(parentAsset.parent(), parentAsset.elements().map(x -> x.stream()
-                    .map(element -> new ModelElement(element.from().subtract(EXPANSION), element.to().add(EXPANSION),
-                        element.faces(), element.rotation(), element.shade(), element.lightEmission())
-                    ).toList()), parentAsset.textures(), parentAsset.display(), parentAsset.guiLight(), parentAsset.ambientOcclusion()).toBytes());
-                if (asset.elements().isPresent()) {
-                    builder.addData(string, new ModelAsset(asset.parent(), asset.elements().map(x -> x.stream()
+                    builder.addData(AssetPaths.model(TerraformerPatch.MOD_ID, parentId.getPath()) + ".json", new ModelAsset(parentAsset.parent(), parentAsset.elements().map(x -> x.stream()
                         .map(element -> new ModelElement(element.from().subtract(EXPANSION), element.to().add(EXPANSION),
                             element.faces(), element.rotation(), element.shade(), element.lightEmission())
-                        ).toList()), asset.textures(), asset.display(), asset.guiLight(), asset.ambientOcclusion()).toBytes());
+                        ).toList()), parentAsset.textures(), parentAsset.display(), parentAsset.guiLight(), parentAsset.ambientOcclusion()).toBytes());
+                    if (asset.elements().isPresent()) {
+                        builder.addData(string, new ModelAsset(asset.parent(), asset.elements().map(x -> x.stream()
+                            .map(element -> new ModelElement(element.from().subtract(EXPANSION), element.to().add(EXPANSION),
+                                element.faces(), element.rotation(), element.shade(), element.lightEmission())
+                            ).toList()), asset.textures(), asset.display(), asset.guiLight(), asset.ambientOcclusion()).toBytes());
+                    }
                 }
+            } catch (ResourceLocationException ignored) {
             }
         }));
 
@@ -111,12 +115,15 @@ public class ResourcePackGenerator {
             if (!string.contains("_uvlock_")) {
                 String[] parts = string.split("/", 4);
                 if (parts.length < 4) return bytes;
-                ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parts[1], parts[3]);
-                if (!parts[0].equals("assets") || !parts[2].equals("models")) return bytes;
-                if (!EXPANDABLE_MODELS.contains(id)) return bytes;
+                try {
+                    ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parts[1], parts[3]);
+                    if (!parts[0].equals("assets") || !parts[2].equals("models")) return bytes;
+                    if (!EXPANDABLE_MODELS.contains(id)) return bytes;
 
-                var asset = ModelAsset.fromJson(new String(bytes, StandardCharsets.UTF_8));
-                return new ModelAsset(asset.parent().map(x -> id(x.getPath())), asset.elements(), asset.textures(), asset.display(), asset.guiLight(), asset.ambientOcclusion()).toBytes();
+                    var asset = ModelAsset.fromJson(new String(bytes, StandardCharsets.UTF_8));
+                    return new ModelAsset(asset.parent().map(x -> id(x.getPath())), asset.elements(), asset.textures(), asset.display(), asset.guiLight(), asset.ambientOcclusion()).toBytes();
+                } catch (ResourceLocationException ignored) {
+                }
             }
             return bytes;
         }));
