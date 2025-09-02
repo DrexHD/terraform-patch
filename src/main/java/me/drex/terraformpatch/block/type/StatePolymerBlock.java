@@ -61,6 +61,7 @@ public record StatePolymerBlock(Map<BlockState, BlockState> map,
                     }
                 }
             }
+            TerraformerPatch.LOGGER.debug("{} uses block states {} from {}", id, cache.size(), type);
             return new StatePolymerBlock(map, fallback);
         } catch (Throwable e) {
             TerraformerPatch.LOGGER.error("Failed to handle state block {}", id, e);

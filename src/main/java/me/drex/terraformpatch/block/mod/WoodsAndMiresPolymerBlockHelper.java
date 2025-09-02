@@ -10,6 +10,7 @@ import me.drex.terraformpatch.block.type.StatePolymerBlock;
 import me.drex.terraformpatch.res.ResourcePackGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import org.jetbrains.annotations.Nullable;
 
 public class WoodsAndMiresPolymerBlockHelper implements ModPolymerBlockHelper {
@@ -21,6 +22,7 @@ public class WoodsAndMiresPolymerBlockHelper implements ModPolymerBlockHelper {
             case "fireweed", "tansy" -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_PLANT_BLOCK, BaseFactoryBlock.PLANT);
             default -> switch (block) {
                 case ShrubLogBlock ignored -> BaseFactoryBlock.BARRIER;
+                case RotatedPillarBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
                 case BranchBlock ignored -> ResourcePackGenerator.expandBlockModel(id, BranchPolymerBlock.INSTANCE);
                 default -> null;
             };

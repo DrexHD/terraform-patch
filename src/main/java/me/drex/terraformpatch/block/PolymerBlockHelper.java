@@ -1,8 +1,5 @@
 package me.drex.terraformpatch.block;
 
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-import com.mojang.serialization.JsonOps;
 import eu.pb4.factorytools.api.block.model.SignModel;
 import eu.pb4.factorytools.api.block.model.generic.BlockStateModelManager;
 import eu.pb4.polymer.blocks.api.BlockModelType;
@@ -20,13 +17,10 @@ import me.drex.terraformpatch.res.ResourcePackGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -83,8 +77,6 @@ public class PolymerBlockHelper {
             case WaterloggedTransparentBlock ignored -> BaseFactoryBlock.BARRIER;
             case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK);
             case SnowyDirtBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-            case RotatedPillarBlock ignored ->
-                StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK, BaseFactoryBlock.BARRIER, state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y);
             case ColoredFallingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
             case FarmBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND_BLOCK);
             case VegetationBlock ignored -> BaseFactoryBlock.PLANT;

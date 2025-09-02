@@ -21,7 +21,7 @@ public class TerrestriaPolymerBlockHelper implements ModPolymerBlockHelper {
         if (polymerBlock != null) return polymerBlock;
 
         return switch (block) {
-            case SaguaroCactusBlock ignored -> BaseFactoryBlock.BARRIER;
+            case SaguaroCactusBlock ignored -> BaseFactoryBlock.CACTUS;
             case CattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP_BLOCK);
             case TallCattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP_BLOCK);
             default -> null;
