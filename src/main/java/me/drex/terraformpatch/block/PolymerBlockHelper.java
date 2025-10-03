@@ -15,7 +15,6 @@ import me.drex.terraformpatch.block.type.*;
 import me.drex.terraformpatch.res.ResourceHelper;
 import me.drex.terraformpatch.res.ResourcePackGenerator;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -72,7 +71,7 @@ public class PolymerBlockHelper {
             case StandingSignBlock ignored -> StateCopyFactoryBlock.SIGN;
             case DoorBlock ignored -> DoorPolymerBlock.INSTANCE;
             case TrapDoorBlock ignored -> TrapdoorPolymerBlock.INSTANCE;
-            case SlabBlock ignored -> ResourcePackGenerator.expandBlockModel(id, SlabPolymerBlock.INSTANCE);
+            case SlabBlock ignored -> ResourcePackGenerator.expandBlockModel(id, SlabPolymerBlock.of(id), s -> !s.equals("type=bottom"));
             case FlowerPotBlock ignored -> ResourcePackGenerator.expandBlockModel(id, BaseFactoryBlock.POT);
             case WaterloggedTransparentBlock ignored -> BaseFactoryBlock.BARRIER;
             case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK);

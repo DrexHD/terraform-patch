@@ -20,6 +20,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.Predicate;
 
 import static me.drex.terraformpatch.TerraformerPatch.id;
 
@@ -33,11 +34,19 @@ public class ResourcePackGenerator {
     }
 
     public static PolymerBlock expandBlockModel(ResourceLocation id, PolymerBlock polymerBlock) {
+        return expandBlockModel(id, polymerBlock, x -> true);
+    }
+
+    public static PolymerBlock expandBlockModel(ResourceLocation id, PolymerBlock polymerBlock, Predicate<String> variantPredicate) {
         try {
             BlockStateAsset blockStateAsset = ResourceHelper.decodeBlockState(id);
 
             Map<String, List<StateModelVariant>> variants = blockStateAsset.variants().orElse(Collections.emptyMap());
-            variants.values().forEach(list -> list.forEach(variant -> expandModel(variant.model())));
+            variants.entrySet().forEach(entry -> {
+                if (variantPredicate.test(entry.getKey())) {
+                    entry.getValue().forEach(variant -> expandModel(variant.model()));
+                }
+            });
 
             List<StateMultiPartDefinition> multiParts = blockStateAsset.multipart().orElse(Collections.emptyList());
             multiParts.forEach(stateMultiPartDefinition -> stateMultiPartDefinition.apply().forEach(stateModelVariant -> expandModel(stateModelVariant.model())));
