@@ -37,7 +37,8 @@ public record StateCopyFactoryBlock(Block clientBlock,
     public static final StateCopyFactoryBlock BARS = new StateCopyFactoryBlock(Blocks.IRON_BARS, ShiftyBlockStateModel::midRange);
     public static final StateCopyFactoryBlock PANE = new StateCopyFactoryBlock(Blocks.GLASS_PANE, ShiftyBlockStateModel::midRange);
     public static final StateCopyFactoryBlock CARPET = new StateCopyFactoryBlock(Blocks.WHITE_CARPET, ShiftyBlockStateModel::longRange);
-    public static final StateCopyFactoryBlock CHAIN = new StateCopyFactoryBlock(Blocks.CHAIN, ShiftyBlockStateModel::longRange);
+    public static final StateCopyFactoryBlock CHAIN = new StateCopyFactoryBlock(Blocks.IRON_CHAIN, ShiftyBlockStateModel::longRange);
+    public static final StateCopyFactoryBlock SHELF = new StateCopyFactoryBlock(Blocks.BIRCH_SHELF, ShiftyBlockStateModel::longRange);
     public static final StateCopyFactoryBlock LANTERN = new StateCopyFactoryBlock(Blocks.LANTERN, ShiftyBlockStateModel::longRange);
 
     @Override

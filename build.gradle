@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.10-SNAPSHOT'
+	id 'fabric-loom' version '1.11-SNAPSHOT'
 	id "me.modmuss50.mod-publish-plugin" version "0.8.4"
 	id 'maven-publish'
 }
@@ -41,7 +41,7 @@ dependencies {
 	modCompileOnly("com.terraformersmc:terrestria-common:${project.terrestria_version}")
 	modCompileOnly("com.terraformersmc:cinderscapes-common:${project.cinderscapes_version}")
 	modCompileOnly("com.terraformersmc:traverse-common:${project.traverse_version}")
-	modCompileOnly files("libs/WoodsAndMires-2.1.1+1.21.8.jar")
+	modCompileOnly files("libs/WoodsAndMires-2.1.1+1.21.9.jar")
 	modCompileOnly("maven.modrinth:blockus:${project.blockus_version}")
 
 

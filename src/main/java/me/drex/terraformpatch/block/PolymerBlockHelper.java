@@ -65,6 +65,7 @@ public class PolymerBlockHelper {
             case ButtonBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.BUTTON);
             case BasePressurePlateBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.PRESSURE_PLATE);
             case CarpetBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.CARPET);
+            case ShelfBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.SHELF);
             case WallSignBlock ignored -> StateCopyFactoryBlock.WALL_SIGN;
             case WallHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_WALL_SIGN;
             case CeilingHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_SIGN;
