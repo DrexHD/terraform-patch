@@ -4,7 +4,6 @@ import com.brand.blockus.blocks.base.PostBlock;
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
 import eu.pb4.factorytools.api.block.model.generic.ShiftyBlockStateModel;
-import eu.pb4.factorytools.api.virtualentity.BlockModel;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import net.minecraft.core.BlockPos;
@@ -13,19 +12,16 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LightningRodBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import xyz.nucleoid.packettweaker.PacketContext;
 
-import java.util.function.BiFunction;
-
-public record PostPolymerBlock(Block clientBlock, BiFunction<BlockState, BlockPos, BlockModel> modelFunction) implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
-    public static final PostPolymerBlock INSTANCE = new PostPolymerBlock(Blocks.SANDSTONE_SLAB, ShiftyBlockStateModel::midRange);
+public record PostPolymerBlock() implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
+    public static final PostPolymerBlock INSTANCE = new PostPolymerBlock();
 
     @Override
     public BlockState getPolymerBlockState(BlockState state, PacketContext context) {
@@ -40,8 +36,8 @@ public record PostPolymerBlock(Block clientBlock, BiFunction<BlockState, BlockPo
     }
 
     @Override
-    public @Nullable ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
-        return this.modelFunction.apply(initialBlockState, pos);
+    public @NotNull ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
+        return ShiftyBlockStateModel.midRange(initialBlockState, pos);
     }
 
     @Override
