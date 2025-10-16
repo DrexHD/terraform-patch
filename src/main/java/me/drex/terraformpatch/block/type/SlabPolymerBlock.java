@@ -8,6 +8,7 @@ import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.terraformpatch.TerraformerPatch;
 import me.drex.terraformpatch.block.PolymerBlockHelper;
+import me.drex.terraformpatch.res.ResourcePackGenerator;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
@@ -30,7 +31,9 @@ public record SlabPolymerBlock(BlockState bottomState, BlockState bottomStateWat
         try {
             BlockState bottom = PolymerBlockHelper.requestPolymerBlockState(id, "type=bottom", BlockModelType.SCULK_SENSOR_BLOCK);
             BlockState bottomWaterlogged = PolymerBlockHelper.requestPolymerBlockState(id, "type=bottom", BlockModelType.SCULK_SENSOR_BLOCK_WATERLOGGED);
-            return new SlabPolymerBlock(bottom, bottomWaterlogged);
+            var block = new SlabPolymerBlock(bottom, bottomWaterlogged);
+            ResourcePackGenerator.expandBlockModel(id, block, s -> !s.equals("type=bottom") || bottom == null || bottomWaterlogged == null);
+            return block;
         } catch (IOException e) {
             TerraformerPatch.LOGGER.error("Failed to handle slab block {}", id, e);
             return null;
@@ -41,7 +44,10 @@ public record SlabPolymerBlock(BlockState bottomState, BlockState bottomStateWat
     public BlockState getPolymerBlockState(BlockState state, PacketContext context) {
         SlabType slabType = state.getValue(SlabBlock.TYPE);
         if (slabType == SlabType.BOTTOM) {
-            return state.getValue(SlabBlock.WATERLOGGED) ? bottomStateWaterlogged : bottomState;
+            var vanillaState = state.getValue(SlabBlock.WATERLOGGED) ? bottomStateWaterlogged : bottomState;
+            if (vanillaState != null) {
+                return vanillaState;
+            }
         }
 
         return slabType != SlabType.DOUBLE ? Blocks.SANDSTONE_SLAB.withPropertiesOf(state) : Blocks.BARRIER.defaultBlockState();
@@ -50,7 +56,8 @@ public record SlabPolymerBlock(BlockState bottomState, BlockState bottomStateWat
     @Override
     public @Nullable ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
         SlabType slabType = initialBlockState.getValue(SlabBlock.TYPE);
-        if (slabType == SlabType.BOTTOM) {
+        var vanillaState = initialBlockState.getValue(SlabBlock.WATERLOGGED) ? bottomStateWaterlogged : bottomState;
+        if (slabType == SlabType.BOTTOM && vanillaState != null) {
             return null;
         }
         return ShiftyBlockStateModel.longRange(initialBlockState, pos);

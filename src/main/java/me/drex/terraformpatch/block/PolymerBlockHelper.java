@@ -72,7 +72,7 @@ public class PolymerBlockHelper {
             case StandingSignBlock ignored -> StateCopyFactoryBlock.SIGN;
             case DoorBlock ignored -> DoorPolymerBlock.INSTANCE;
             case TrapDoorBlock ignored -> TrapdoorPolymerBlock.INSTANCE;
-            case SlabBlock ignored -> ResourcePackGenerator.expandBlockModel(id, SlabPolymerBlock.of(id), s -> !s.equals("type=bottom"));
+            case SlabBlock ignored -> SlabPolymerBlock.of(id);
             case FlowerPotBlock ignored -> ResourcePackGenerator.expandBlockModel(id, BaseFactoryBlock.POT);
             case WaterloggedTransparentBlock ignored -> BaseFactoryBlock.BARRIER;
             case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK);
