@@ -60,7 +60,7 @@ public record SlabPolymerBlock(BlockState bottomState, BlockState bottomStateWat
         if (slabType == SlabType.BOTTOM && vanillaState != null) {
             return null;
         }
-        return ShiftyBlockStateModel.longRange(initialBlockState, pos);
+        return ShiftyBlockStateModel.midRange(initialBlockState, pos);
     }
 
     @Override

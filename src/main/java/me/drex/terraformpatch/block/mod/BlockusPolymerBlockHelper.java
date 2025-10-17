@@ -17,33 +17,30 @@ public class BlockusPolymerBlockHelper implements ModPolymerBlockHelper {
     @Override
     public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
 
-        return switch (id.getPath()) {
-            case "golden_bars" -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.BARS);
-            default -> switch (block) {
-                case IronBarsBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.PANE);
-                case ChainBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.CHAIN);
-                case PostBlock ignored -> ResourcePackGenerator.expandBlockModel(id, PostPolymerBlock.INSTANCE);
-                case WeatheringCopperFullBlock ignored -> BaseFactoryBlock.BARRIER;
-                case StainedGlassBlock ignored -> BaseFactoryBlock.BARRIER;
-                case ColoredTilesBlock ignored -> BaseFactoryBlock.BARRIER;
-                case RotatedPillarBlock ignored -> BaseFactoryBlock.BARRIER;
-                case SmallHedgeBlock ignored -> WallPolymerBlock.HEDGE;
-                case Barrier ignored -> WallPolymerBlock.BARRIER;
-                case OrientableBlockBase ignored -> BaseFactoryBlock.BARRIER;
-                case RedstoneLampBlock ignored -> BaseFactoryBlock.BARRIER;
-                case LargeFlowerPotBlock ignored -> BaseFactoryBlock.BARRIER;
-                case PaperLampBlock ignored -> BaseFactoryBlock.BARRIER;
-                case LanternBlock ignored -> BaseFactoryBlock.BARRIER;
-                case TransparentBlock ignored -> BaseFactoryBlock.BARRIER;
-                case CarvedPumpkinBlock ignored -> BaseFactoryBlock.BARRIER;
-                case SpongeBlock ignored -> BaseFactoryBlock.BARRIER;
-                case LoveBlock ignored -> BaseFactoryBlock.BARRIER;
-                case SimpleFallingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-                case FullFacingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-                case AmethystBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-                case AsphaltBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-                default -> null;
-            };
+        return switch (block) {
+            case IronBarsBlock ignored -> BarsPolymerBlock.INSTANCE;
+            case ChainBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.CHAIN);
+            case PostBlock ignored -> ResourcePackGenerator.expandBlockModel(id, PostPolymerBlock.INSTANCE);
+            case WeatheringCopperFullBlock ignored -> BaseFactoryBlock.BARRIER;
+            case StainedGlassBlock ignored -> BaseFactoryBlock.BARRIER;
+            case ColoredTilesBlock ignored -> BaseFactoryBlock.BARRIER;
+            case RotatedPillarBlock ignored -> BaseFactoryBlock.BARRIER;
+            case SmallHedgeBlock ignored -> WallPolymerBlock.HEDGE;
+            case Barrier ignored -> WallPolymerBlock.BARRIER;
+            case OrientableBlockBase ignored -> BaseFactoryBlock.BARRIER;
+            case RedstoneLampBlock ignored -> BaseFactoryBlock.BARRIER;
+            case LargeFlowerPotBlock ignored -> BaseFactoryBlock.BARRIER;
+            case PaperLampBlock ignored -> BaseFactoryBlock.BARRIER;
+            case LanternBlock ignored -> BaseFactoryBlock.BARRIER;
+            case TransparentBlock ignored -> BaseFactoryBlock.BARRIER;
+            case CarvedPumpkinBlock ignored -> BaseFactoryBlock.BARRIER;
+            case SpongeBlock ignored -> BaseFactoryBlock.BARRIER;
+            case LoveBlock ignored -> BaseFactoryBlock.BARRIER;
+            case SimpleFallingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case FullFacingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case AmethystBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case AsphaltBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            default -> null;
         };
     }
 }

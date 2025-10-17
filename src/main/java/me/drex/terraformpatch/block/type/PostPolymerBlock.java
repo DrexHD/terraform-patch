@@ -37,7 +37,7 @@ public record PostPolymerBlock() implements FactoryBlock, PolymerTexturedBlock, 
 
     @Override
     public @NotNull ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
-        return ShiftyBlockStateModel.midRange(initialBlockState, pos);
+        return ShiftyBlockStateModel.shortRange(initialBlockState, pos);
     }
 
     @Override
