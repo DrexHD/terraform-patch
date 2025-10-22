@@ -35,9 +35,9 @@ public record SlabPolymerBlock(BlockState bottomState,
 
     static {
         int i = 0;
-        for (boolean top : new boolean[]{false, true}) {
+        for (boolean bottom : new boolean[]{false, true}) {
             for (boolean waterlogged : new boolean[]{false, true}) {
-                EMPTY_STATES[i] = PolymerBlockResourceUtils.requestEmpty(BlockModelType.getSlab(top, waterlogged));
+                EMPTY_STATES[i] = PolymerBlockResourceUtils.requestEmpty(BlockModelType.getSlab(bottom, waterlogged));
                 i++;
             }
         }
@@ -68,7 +68,7 @@ public record SlabPolymerBlock(BlockState bottomState,
         if (slabType == SlabType.DOUBLE) {
             return Blocks.BARRIER.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, waterlogged);
         } else {
-            int i = slabType == SlabType.BOTTOM ? 0 : 2;
+            int i = slabType == SlabType.TOP ? 0 : 2;
             if (waterlogged) i++;
             return EMPTY_STATES[i];
         }
